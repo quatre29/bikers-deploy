@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers:
+        - name: server
+          image: quatre29/bikers-api
+          ports:
+            - containerPort: 9090
+          env:
+            - name: PGUSER
+              value: postgres
+            - name: PGHOST
+              value: postgres-cluster-ip-service
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+            - name: JWT_SECRET
+              value: ultrasecurepaswwordasdaskjasdp22okdakdsasadlkfjfiii333o3o3okfffoo2nffdasdasdas2244455554rsddfgfhjg345y6hgf456h7j87h6g5f4f45g
+            - name: REFRESH_TOKEN_SECRET
+              value: ultrasecurepaswwordasdaskjasdp22okdakdsasadlkfjfiii333o3o3okfffoo2nffdasdasdas224214354365yhtgrfedwertyhtrger3t4y56hgr45jhgf345y6hg4fg56
+            - name: JWT_EXPIRES_IN
+              value: 30d
+            - name: JWT_COOKIE_EXPIRES_IN
+              value: 30d
+            - name: CLOUDINARY_NAME
+              value: dylndbgft
+            - name: CLOUDINARY_API_KEY
+              value: "181466234886992"
+            - name: CLOUDINARY_API_SECRET
+              value: pfdB1FB4ZLQ739dZJ_3tNFrnw4g
+            - name: EMAIL_USERNAME
+              value: 4330e4bc10a712
+            - name: EMAIL_PASSWORD
+              value: 4b64e88587b0d5
+            - name: EMAIL_HOST
+              value: smtp.mailtrap.io
+            - name: EMAIL_PORT
+              value: "2525"
